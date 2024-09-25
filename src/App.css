@@ -15,10 +15,11 @@ main{
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .die--body{
-  background-color: white;
+  background-color: ;
   width: 60px;
   height: 60px;
   border-radius: 10px;
@@ -30,7 +31,14 @@ main{
   font-size: 20.59px;
   font-weight: 700;
   line-height: 24.07px;
+}
 
+.die--held{
+  background-color: #59E391;
+}
+
+.die--notheld{
+  background-color: white;
 }
 
 .dice--container{
@@ -42,4 +50,24 @@ main{
 
 .die--num{
   font-size: 2.5rem;
+}
+
+.roll--btn{
+  background: #5035FF;
+  color: white;
+  font-family: Karla;
+  font-size: 1.5rem;
+  margin-top: 3rem;
+  padding: 15px 50px;
+  border-radius: 3.81px;
+  border: none;
+  opacity: 0px;
+}
+
+.roll--btn:focus {
+  outline: none;
+}
+
+.roll--btn:active {
+  box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
 }
