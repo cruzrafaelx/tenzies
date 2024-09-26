@@ -78,6 +78,7 @@ main{
   border-radius: 3.81px;
   border: none;
   opacity: 0px;
+  cursor: pointer;
 }
 
 .roll--btn:focus {

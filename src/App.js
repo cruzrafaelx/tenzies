@@ -45,11 +45,15 @@ function App() {
   }
 
   //Function to roll new dice
-  function rollNewNumbers(){
-
-   setDieNumbers(prevDieNumbers => prevDieNumbers.map(item =>{
-    return item.isHeld ? item : generateNewDie()
-   }))
+  function rollDice(){
+    if(!tenzies){
+      setDieNumbers(prevDieNumbers => prevDieNumbers.map(item =>{
+        return item.isHeld ? item : generateNewDie()
+       }))
+    } else {
+      setTenzies(!tenzies)
+      setDieNumbers(newDiceNumbers())
+    }
   }
 
   //Function to hold clicked dice
@@ -73,7 +77,7 @@ function App() {
       <div className='dice--container'>
         {diceCollection}
       </div>
-      {<button className='roll--btn' onClick={()=>rollNewNumbers()} >{tenzies ? "New Game": "Roll"}</button>}
+      {<button className='roll--btn' onClick={()=>rollDice()} >{tenzies ? "New Game": "Roll"}</button>}
       {tenzies && <ReactConfetti />}
     </main>
   );
