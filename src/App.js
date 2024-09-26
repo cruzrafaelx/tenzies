@@ -25,9 +25,23 @@ function App() {
    setDieNumbers(newDiceNumbers())
   }
 
+  function hold(id){
+    setDieNumbers(prevDieNumbers => prevDieNumbers.map(item => {
+      return item.id === id ? {...item, isHeld: !item.isHeld} : item
+    }))
+  }
+
   const diceCollection = dieNumbers.map((item) => {
-    return <Die key={item.id} value={item.value} isHeld={item.isHeld}/> 
+    return <Die key={item.id} 
+                value={item.value} 
+                isHeld={item.isHeld} 
+                hold={()=> hold(item.id)}/> 
   })
+
+  // console.log(diceCollection)
+
+  
+
 
   return (
     <main>
