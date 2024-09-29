@@ -30,6 +30,26 @@ main{
   margin-bottom: 1rem;
 }
 
+.timers, .btm, .best-cont{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  
+}
+
+.btm{
+  margin-top: 2rem;
+}
+
+.best-cont{
+  font-family: 'Inter', sans-serif;
+  margin-left: 3rem ;
+}
+
+.besttime{
+  margin-left: 0.2rem;
+}
+
 .instructions {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
@@ -76,7 +96,6 @@ main{
 }
 
 .rolls{
-  margin-top: 2em;
   font-family: 'Inter', sans-serif;
 }
 

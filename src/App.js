@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Die from './components/Die.jsx';
 import ReactConfetti from './components/Confetti.jsx';
 import Timer from './components/Timer.jsx';
+import BestTime from './components/BestTime.jsx';
 import { nanoid } from 'nanoid';
 
 
@@ -11,13 +12,16 @@ function App() {
   const [dieNumbers, setDieNumbers] = useState(() => newDiceNumbers())
   const [tenzies, setTenzies] = useState(false)
   const [rolls, setRolls] = useState(0)
+ 
 
   //States for timer
   const[isActive, setIsActive] = useState(false)
   const[time, setTime] = useState(0)
+  
 
   //State for the flag
-  const[clicked, setIsClicked] = useState(false)
+  const [clicked, setIsClicked] = useState(false)
+ 
 
   //Effect to check if values and isHold are equal and true
   useEffect(() => {
@@ -27,11 +31,23 @@ function App() {
      })
     
      if(winner){
+      bestTime()
       setTenzies(true)
       setIsActive(false)
     }
      
   }, [dieNumbers])
+  
+  //Function to save best time in local storage
+  function bestTime(){
+    const bestTime = JSON.parse(localStorage.getItem("time"))
+
+    if(time < bestTime){
+      localStorage.setItem("time", JSON.stringify(time))
+    }
+  }
+
+  
 
   //Function to generate a new die
   function generateNewDie(){
@@ -67,12 +83,17 @@ function App() {
       setDieNumbers(prevDieNumbers => prevDieNumbers.map(item =>{
         return item.isHeld ? item : generateNewDie()
        }))
-    } else {
+    } 
+    
+    //New game conditions
+    else {
       setTenzies(!tenzies)
       setDieNumbers(newDiceNumbers())
       setRolls(0)
       setTime(0)
+      setIsClicked(!clicked)
     }
+   
     toggleTimer()
   }
 
@@ -99,7 +120,13 @@ function App() {
       <div className='dice--container'>
         {diceCollection}
       </div>
-      <p className='rolls'>Number of rolls: {rolls}</p>
+      <div className='btm'>
+        <p className='rolls'>Number of rolls: {rolls}</p>
+        <div className='best-cont'>
+          <p>Your best time: </p>
+          <BestTime /> 
+        </div>
+      </div>
       {<button className='roll--btn' onClick={()=>rollDice()} >{tenzies ? "New Game": "Roll"}</button>}
       {tenzies && <ReactConfetti />}
     </main>
