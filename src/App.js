@@ -9,10 +9,10 @@ function App() {
 
   const [dieNumbers, setDieNumbers] = useState(() => newDiceNumbers())
   const [tenzies, setTenzies] = useState(false)
+  const [rolls, setRolls] = useState(0)
 
   //Effect to check if values and isHold are equal and true
   useEffect(() => {
-    console.log("Dice have changed!")
     
     const winner = dieNumbers.every(num =>{
       return num.isHeld && dieNumbers[0].value === num.value
@@ -20,7 +20,6 @@ function App() {
     
      if(winner){
       setTenzies(true)
-      console.log("You won!")
     }
      
   }, [dieNumbers])
@@ -46,6 +45,7 @@ function App() {
 
   //Function to roll new dice
   function rollDice(){
+    setRolls(prevRolls => prevRolls + 1)
     if(!tenzies){
       setDieNumbers(prevDieNumbers => prevDieNumbers.map(item =>{
         return item.isHeld ? item : generateNewDie()
@@ -53,6 +53,7 @@ function App() {
     } else {
       setTenzies(!tenzies)
       setDieNumbers(newDiceNumbers())
+      setRolls(0)
     }
   }
 
@@ -77,6 +78,7 @@ function App() {
       <div className='dice--container'>
         {diceCollection}
       </div>
+      <p className='rolls'>Number of rolls: {rolls}</p>
       {<button className='roll--btn' onClick={()=>rollDice()} >{tenzies ? "New Game": "Roll"}</button>}
       {tenzies && <ReactConfetti />}
     </main>

@@ -68,6 +68,10 @@ main{
   cursor: pointer;
 }
 
+.rolls{
+  margin-top: 2em;
+}
+
 .roll--btn{
   background: #5035FF;
   color: white;
