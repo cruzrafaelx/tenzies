@@ -2,6 +2,7 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import Die from './components/Die.jsx';
 import ReactConfetti from './components/Confetti.jsx';
+import Timer from './components/Timer.jsx';
 import { nanoid } from 'nanoid';
 
 
@@ -10,6 +11,13 @@ function App() {
   const [dieNumbers, setDieNumbers] = useState(() => newDiceNumbers())
   const [tenzies, setTenzies] = useState(false)
   const [rolls, setRolls] = useState(0)
+
+  //States for timer
+  const[isActive, setIsActive] = useState(false)
+  const[time, setTime] = useState(0)
+
+  //State for the flag
+  const[clicked, setIsClicked] = useState(false)
 
   //Effect to check if values and isHold are equal and true
   useEffect(() => {
@@ -20,6 +28,7 @@ function App() {
     
      if(winner){
       setTenzies(true)
+      setIsActive(false)
     }
      
   }, [dieNumbers])
@@ -43,6 +52,14 @@ function App() {
     return diceArray
   }
 
+  //Flag function: to only run the timer on the first click of roll dice.
+  function toggleTimer(){
+    if(!clicked){
+      setIsClicked(!clicked)
+      setIsActive(!isActive)
+    }
+  }
+
   //Function to roll new dice
   function rollDice(){
     setRolls(prevRolls => prevRolls + 1)
@@ -54,7 +71,9 @@ function App() {
       setTenzies(!tenzies)
       setDieNumbers(newDiceNumbers())
       setRolls(0)
+      setTime(0)
     }
+    toggleTimer()
   }
 
   //Function to hold clicked dice
@@ -62,6 +81,7 @@ function App() {
     setDieNumbers(prevDieNumbers => prevDieNumbers.map(item => {
       return item.id === id ? {...item, isHeld: !item.isHeld} : item
     }))
+    toggleTimer()
   }
 
   const diceCollection = dieNumbers.map((item) => {
@@ -74,6 +94,7 @@ function App() {
   return (
     <main>
       <h1 className="title">Tenzies</h1>
+      <Timer isActive={isActive} time={time} setTime={setTime}/>
       <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
       <div className='dice--container'>
         {diceCollection}
