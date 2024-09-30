@@ -13,12 +13,12 @@ function App() {
   const [tenzies, setTenzies] = useState(false)
   const [rolls, setRolls] = useState(0)
  
-
+  
   //States for timer
   const[isActive, setIsActive] = useState(false)
   const[time, setTime] = useState(0)
   
-
+  
   //State for the flag
   const [clicked, setIsClicked] = useState(false)
  
@@ -40,14 +40,17 @@ function App() {
   
   //Function to save best time in local storage
   function bestTime(){
-    const bestTime = JSON.parse(localStorage.getItem("time"))
+    const bestTime = localStorage.getItem("time")
 
-    if(time < bestTime){
+    if(!bestTime ){
       localStorage.setItem("time", JSON.stringify(time))
     }
+    
+    else if(time < bestTime){
+      localStorage.setItem("time", JSON.stringify(time))
+    } 
   }
 
-  
 
   //Function to generate a new die
   function generateNewDie(){
